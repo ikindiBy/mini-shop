@@ -38,15 +38,15 @@
 	let itemsForMen = [{size: ['XL','L'], colors: ['rgb(255,230,55)','rgb(22,94,185)','rgb(83,82,83)'], img : "images/img_1.png", name: 't-shirt', price:5}, 
 					  {size: ['XL','L','M'], colors: false, img : "images/img_2.png", name: 'pants forclaz', price:30},
 					  {size: '10 litres', colors: false, img : "images/img_3.png", name: 'backpack', price:60}, 
-					  {size: ['M','S'], colors: false, img : false, name: 'jacket', price:12},
-					  {size: '', colors: false, img : false, name: 'socks', price:2}, 
-					  {size: '', colors: false, img : false, name: 'cap', price:15},
+					  {size: ['M','S'], colors: false, img : '', name: 'jacket', price:12},
+					  {size: '', colors: false, img : '', name: 'socks', price:2}, 
+					  {size: '', colors: false, img : '', name: 'cap', price:15},
 					  {size: '', colors: false, img : "images/img_5.png", name: 'sneakers', price:21}, 
 					  {size: '', colors: false, img : "images/img_5.png", name: 'sneakers', price:22},
 					  {size: '', colors: false, img : "images/img_5.png", name: 'sneakers', price:52},
-					  {size: 'normal', colors: ['rgb(183,82,183)'], img : false, name: 'tie', price:12},
-					  {size: '', colors: false, img : false, name: 'tie', price:5},
-					  {size: '', colors: false, img : false, name: 'tie', price:57},
+					  {size: 'normal', colors: ['rgb(183,82,183)'], img : '', name: 'tie', price:12},
+					  {size: '', colors: false, img : '', name: 'tie', price:5},
+					  {size: '', colors: false, img : '', name: 'tie', price:57},
 					  {size: ['XXl','XL','L','M'], colors: false, img : 'images/img_4.png', name: 'coat', price:259},
 	];
 
@@ -109,13 +109,7 @@
 
 	for (let i=0; i<3; i++){
 		fillItem(itemsForMen, 1, setItemsMen.children[i], i);
-	};
-
-	for (let i=0; i<3; i++){
 		fillItem(itemsForWomen, 1, setItemsWomen.children[i], i);
-	};
-
-	for (let i=0; i<3; i++){
 		fillItem(itemsForChildren, 1, setItemsChild.children[i], i);
 	};
 
@@ -171,19 +165,23 @@
 	};
 					
 	function fillItem(array, curSet, item, i){
-		/* for image  */
-				if (array[(curSet-1)*3+i].img) {
+
 					let imageForItem = document.createElement('img');
-					imageForItem.setAttribute('src',array[(curSet-1)*3+i].img);
+					const defaultImage = "images/default.png";
+
+					if (!!array[(curSet-1)*3+i].img) {
+						imageForItem.setAttribute('src',array[(curSet-1)*3+i].img);
+					} else {
+						imageForItem.setAttribute('src',defaultImage);
+					}
+
 					if (item.querySelector('.image').children.length) {
 						item.querySelector('.image').children[0].remove();
 						item.querySelector('.image').appendChild(imageForItem);
 					} else {	
 						item.querySelector('.image').appendChild(imageForItem);
 					}	
-				} else {
-					item.querySelector('.image').innerHTML=null;
-				};
+
 		/* for size  */
 				let arrayOfSizes = array[(curSet-1)*3+i].size;
 
@@ -247,6 +245,38 @@
 				item.querySelector('.name_item').innerHTML=array[(curSet-1)*3+i].name;
 				item.querySelector('.price').innerHTML=array[(curSet-1)*3+i].price+',00';
 	};
+
+
+		/* sorting by price and by name */
+
+	let sortingByPrice = document.body.querySelector('.type_sorting').querySelector('span');
+
+	sortingByPrice.addEventListener('click', e => {
+		itemsForMen.sort((a,b) => a.price-b.price);
+		itemsForWomen.sort((a,b) => a.price-b.price);
+		itemsForChildren.sort((a,b) => a.price-b.price);
+
+		for (let i=0; i<3; i++){
+		fillItem(itemsForMen, 1, setItemsMen.children[i], i);
+		fillItem(itemsForWomen, 1, setItemsWomen.children[i], i);
+		fillItem(itemsForChildren, 1, setItemsChild.children[i], i);
+		};
+	});
+
+	let sortingByName = document.body.querySelector('.type_sorting').querySelector('li');
+	sortingByName.addEventListener('click', e => {
+		itemsForMen.sort((a,b) => a.name.localeCompare(b.name));
+		itemsForWomen.sort((a,b) => a.name.localeCompare(b.name));
+		itemsForChildren.sort((a,b) => a.name.localeCompare(b.name));
+
+		for (let i=0; i<3; i++){
+		fillItem(itemsForMen, 1, setItemsMen.children[i], i);
+		fillItem(itemsForWomen, 1, setItemsWomen.children[i], i);
+		fillItem(itemsForChildren, 1, setItemsChild.children[i], i);
+		};
+	});
+
+
 
 
 	 
