@@ -35,7 +35,7 @@
 	/*  for slider  */ 
 
 	// probably from DB
-	let itemsForMen = [{size: ['XL','L'], colors: ['rgb(255,230,55)','rgb(22,94,185)','rgb(83,82,83)'], img : "images/img_1.png", name: 't-shirt', price:5}, 
+	let itemsForMen = [{size: ['XL','L'], colors: ['rgb(255,230,55)','rgb(22,94,185)','rgb(83,82,83)'], img : "images/img_1.png", imgBig : "images/img_1B.png", name: 't-shirt', price:5}, 
 					  {size: ['XL','L','M'], colors: false, img : "images/img_2.png", name: 'pants forclaz', price:30},
 					  {size: '10 litres', colors: false, img : "images/img_3.png", name: 'backpack', price:60}, 
 					  {size: ['M','S'], colors: false, img : '', name: 'jacket', price:12},
@@ -101,10 +101,16 @@
 	let toNextC = document.body.querySelectorAll('.fa-angle-right')[2];
 	let toPrevC = document.body.querySelectorAll('.fa-angle-left')[2];
 
-	
-	let setItemsMen = document.body.querySelectorAll('.set_items')[0];
-	let setItemsWomen = document.body.querySelectorAll('.set_items')[1];
-	let setItemsChild = document.body.querySelectorAll('.set_items')[2];
+	let setItems = document.body.querySelectorAll('.set_items');
+	let setItemsMen = setItems[0];
+	let setItemsWomen = setItems[1];
+	let setItemsChild = setItems[2];
+
+
+
+	// let setItemsMen = document.body.querySelectorAll('.set_items')[0];
+	// let setItemsWomen = document.body.querySelectorAll('.set_items')[1];
+	// let setItemsChild = document.body.querySelectorAll('.set_items')[2];
 
 
 	for (let i=0; i<3; i++){
@@ -165,7 +171,7 @@
 	};
 					
 	function fillItem(array, curSet, item, i){
-
+		/* for images  */
 					let imageForItem = document.createElement('img');
 					const defaultImage = "images/default.png";
 
@@ -264,6 +270,7 @@
 	});
 
 	let sortingByName = document.body.querySelector('.type_sorting').querySelector('li');
+
 	sortingByName.addEventListener('click', e => {
 		itemsForMen.sort((a,b) => a.name.localeCompare(b.name));
 		itemsForWomen.sort((a,b) => a.name.localeCompare(b.name));
@@ -275,6 +282,133 @@
 		fillItem(itemsForChildren, 1, setItemsChild.children[i], i);
 		};
 	});
+
+
+
+	let itemSelected = document.body.querySelectorAll('.item');
+
+	/*
+	let setRows = document.body.querySelector('.content');
+    let rowsArr = Array.from(setRows.children);
+    let setItems = document.body.querySelectorAll('.set_items');
+	*/
+
+	let sortingMenu = document.body.querySelector('.sorting');
+	let containerCheck = document.body.querySelector('.container_check');
+	
+	//let descriptionItem = document.createElement('div');
+	//	descriptionItem.className = 'item_descript';
+	//	document.body.appendChild(descriptionItem);
+
+	let descriptionItem = document.body.querySelector('.item_descript');
+
+	setItems.forEach(rowItems => {
+		rowItems.addEventListener('click', e => {
+
+		let index = (+currentPageM.innerHTML-1)*3 + elmSearch(e.target);
+
+
+		setRows.style.display = 'none';
+		sortingMenu.style.display = 'none';
+		containerCheck.style.display = 'none';
+
+		descriptionItem.style.display = 'block';
+
+		// setRows.innerHTML=`<img src=${itemsForMen[index].img}></a>`;
+
+		
+
+		//let aboutItem = document.createElement('div');
+		//aboutItem.className = 'about_item';
+
+		let aboutItem = descriptionItem.querySelector('.about_item');
+
+
+/* for colors  */
+		let colors = aboutItem.querySelector('.color');
+		let colorsSet = document.createElement('div');
+		colorsSet.className = 'colors';
+
+				if (Array.isArray(itemsForMen[index].colors)) {
+					let arrayOfColors = itemsForMen[index].colors;
+						arrayOfColors.forEach(color => {
+							let div = document.createElement('div');
+							div.style.background = color;
+							colorsSet.appendChild(div);
+						})
+					};			
+		colors.insertBefore(colorsSet,colors.children[0]);
+
+/* for size  */
+				let sizes = aboutItem.querySelector('.size');
+				let arrayOfSizes = itemsForMen[index].size;
+				let spanSize = document.createElement('span');
+
+				if (Array.isArray(arrayOfSizes)) {
+					let sizesString = arrayOfSizes.join(', ');
+					spanSize.textContent = sizesString;
+				 } else if(typeof (arrayOfSizes) === 'string'){
+				 	spanSize.textContent = sizesString;
+				};
+
+				sizes.insertBefore(spanSize,sizes.children[0]);
+
+/* for prices  */
+		let priceItem = aboutItem.querySelector('.price_item');
+		let divPrice = document.createElement('div');
+		divPrice.className = 'price';
+		divPrice.innerHTML=itemsForMen[index].price+',00';
+
+		priceItem.insertBefore(divPrice,priceItem.children[0]);
+
+/*--------------------------------------*/
+
+		let imgBigForItem = document.createElement('img');
+		let imgSource = itemsForMen[index].imgBig || itemsForMen[index].img || "images/default.png";
+		imgBigForItem.setAttribute('src',imgSource);
+
+		descriptionItem.appendChild(imgBigForItem);
+		// descriptionItem.appendChild(aboutItem);
+		
+
+
+		});
+	});
+
+
+/*------------------  back to catalog ---------------------*/ 
+	let backToCatalog = document.body.querySelector('.back_to_catalog');
+	console.log(backToCatalog);
+
+	backToCatalog.addEventListener('click', e => {
+		 //if (e.target === backToCatalog.firstElementChild) {
+
+		let descriptionItem = document.body.querySelector('.item_descript');
+
+		descriptionItem.style.display = 'none';
+		//descriptionItem.innerHTML= null;
+		setRows.style.display = 'block';
+		sortingMenu.style.display = 'block';
+		containerCheck.style.display = 'flex';
+
+		//}
+
+		});
+
+
+
+	function elmSearch (ele) {
+			while (ele.tagName !== 'DIV' || ele.className !== 'item') {
+				ele = ele.parentElement;
+			};
+			return  Array.from(setItems[0].children).indexOf(ele)
+		};
+
+
+
+
+
+	
 
 
 

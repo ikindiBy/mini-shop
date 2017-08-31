@@ -104,7 +104,7 @@ header button:hover
     border: 6px solid rgb(170,155,119);
 }
 
-.size,
+.item .size,
 .colors,
 .name_item,
 .price
@@ -570,4 +570,98 @@ a
     font-size: 18px;
 
     vertical-align: middle;
+}
+
+/*---------------- for inner page----------------*/
+.item_descript {
+    display: none;
+    position: relative;
+    margin: 20px auto;
+    border: 6px solid rgb(170,155,119);
+    box-sizing: border-box;
+    width: 100%;
+    height: 1028px;
+    background-color: #ccc;
+    text-transform: uppercase;
+    font-size: 22px;
+}
+
+.item_descript img{
+    position: absolute;
+    top: 100px;
+    left: 25px;   
+}
+
+
+
+.back_to_catalog{
+    display: block;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.back_to_catalog span {
+     vertical-align: middle;
+}
+
+.back_to_catalog:before{
+    font-family: FontAwesome;
+    font-size: 27px;
+    content: '\f104';
+    vertical-align: middle;
+}
+
+.item_descript .colors{
+    position: inherit;
+}
+
+.item_descript .about_item {
+    position: absolute;
+    top: 100px;
+    right: 50px;
+}
+
+.about_item {
+    display: inline-block;
+    width: 32%;
+    font-size: 0;
+}
+
+.about_item span{
+    display: inline-block;
+}
+
+.about_item > div span:last-of-type {
+    width: 40%;
+    padding-left: 20px;
+    box-sizing: border-box;
+}
+
+
+
+.about_item .colors,
+.about_item .price,
+.about_item .size :first-child
+{
+    position: inherit;
+    display: inline-block;
+    width: 60%;
+    text-align: right;
+}
+
+.about_item .name_item
+{
+    position: inherit;
+    display: inline-block;
+}
+
+.about_item .size,
+.about_item .color,
+.about_item .price_item,
+{
+    display: block;
+}
+
+.about_item  div {
+    font-size: 22px;
 }
