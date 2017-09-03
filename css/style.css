@@ -453,13 +453,6 @@ a
 
 /*  for line in row*/
 
-.row span,
-.row .line_goriz
-{
-    display: inline-block;
-
-    vertical-align: middle;
-}
 
 .row span
 {
@@ -468,14 +461,21 @@ a
     width: 100px;
 
     text-transform: uppercase;
+    display: inline-block;
+
+    vertical-align: middle;
 }
 
-.row .line_goriz
+ .line_goriz
 {
     box-sizing: border-box;
     width: calc(100% - 100px);
 
     border-top: 2px solid rgb(204,204,204);
+
+    display: inline-block;
+
+    vertical-align: middle;
 }
 
 .groups_items
@@ -595,7 +595,7 @@ a
 
 
 .back_to_catalog{
-    display: block;
+    display: none;
     text-transform: uppercase;
     cursor: pointer;
 }
@@ -664,4 +664,18 @@ a
 
 .about_item  div {
     font-size: 22px;
+}
+
+.name_product {
+    display: none;
+    font-size: 0;
+    margin-top: 30px;
+}
+
+.name_product  span {
+display: inline-block;
+width: 100px;
+vertical-align: middle;
+font-size: 22px;
+text-transform: uppercase;
 }

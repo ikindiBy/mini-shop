@@ -295,12 +295,20 @@
 
 	let sortingMenu = document.body.querySelector('.sorting');
 	let containerCheck = document.body.querySelector('.container_check');
+	let backToCatalog = document.body.querySelector('.back_to_catalog');
+	let nameProdLine = document.body.querySelector('.name_product');
+	let descriptionItem = document.body.querySelector('.item_descript');
+	let aboutItem = descriptionItem.querySelector('.about_item');
+	let priceItem = aboutItem.querySelector('.price_item');
+	let colors = aboutItem.querySelector('.color');
+	let sizes = aboutItem.querySelector('.size');
+	
 	
 	//let descriptionItem = document.createElement('div');
 	//	descriptionItem.className = 'item_descript';
 	//	document.body.appendChild(descriptionItem);
 
-	let descriptionItem = document.body.querySelector('.item_descript');
+	
 
 	setItems.forEach(rowItems => {
 		rowItems.addEventListener('click', e => {
@@ -312,7 +320,9 @@
 		sortingMenu.style.display = 'none';
 		containerCheck.style.display = 'none';
 
+		backToCatalog.style.display = 'block';
 		descriptionItem.style.display = 'block';
+		nameProdLine.style.display = 'block';
 
 		// setRows.innerHTML=`<img src=${itemsForMen[index].img}></a>`;
 
@@ -321,11 +331,19 @@
 		//let aboutItem = document.createElement('div');
 		//aboutItem.className = 'about_item';
 
-		let aboutItem = descriptionItem.querySelector('.about_item');
+		
+
+/* for name product before line   */
+		let name = nameProdLine.querySelector('span');
+		name.innerHTML = itemsForMen[index].name;
+
+
+
+
 
 
 /* for colors  */
-		let colors = aboutItem.querySelector('.color');
+		
 		let colorsSet = document.createElement('div');
 		colorsSet.className = 'colors';
 
@@ -340,7 +358,7 @@
 		colors.insertBefore(colorsSet,colors.children[0]);
 
 /* for size  */
-				let sizes = aboutItem.querySelector('.size');
+				
 				let arrayOfSizes = itemsForMen[index].size;
 				let spanSize = document.createElement('span');
 
@@ -348,13 +366,13 @@
 					let sizesString = arrayOfSizes.join(', ');
 					spanSize.textContent = sizesString;
 				 } else if(typeof (arrayOfSizes) === 'string'){
-				 	spanSize.textContent = sizesString;
+				 	spanSize.textContent = itemsForMen[index].size;
 				};
 
 				sizes.insertBefore(spanSize,sizes.children[0]);
 
 /* for prices  */
-		let priceItem = aboutItem.querySelector('.price_item');
+		
 		let divPrice = document.createElement('div');
 		divPrice.className = 'price';
 		divPrice.innerHTML=itemsForMen[index].price+',00';
@@ -377,7 +395,7 @@
 
 
 /*------------------  back to catalog ---------------------*/ 
-	let backToCatalog = document.body.querySelector('.back_to_catalog');
+	
 	console.log(backToCatalog);
 
 	backToCatalog.addEventListener('click', e => {
@@ -385,7 +403,16 @@
 
 		let descriptionItem = document.body.querySelector('.item_descript');
 
+
+
 		descriptionItem.style.display = 'none';
+		backToCatalog.style.display = 'none';
+		nameProdLine.style.display = 'none';
+		nameProdLine.querySelector('span').innerHTML = null;
+		priceItem.children[0].remove();
+		colors.children[0].remove();
+		sizes.children[0].remove();
+		descriptionItem.children[1].remove();
 		//descriptionItem.innerHTML= null;
 		setRows.style.display = 'block';
 		sortingMenu.style.display = 'block';
