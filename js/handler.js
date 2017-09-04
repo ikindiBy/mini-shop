@@ -1,6 +1,6 @@
 
 /*
-*   Handler for groups of things per checked type.
+*   Handler for groups of products per checked type.
 */
 
     let setChecks = document.body.querySelector('.set_checks');
@@ -73,7 +73,6 @@
 	];
 
 
-
 	let countProductsMen = itemsForMen.length; 
 	let countProductsWomen = itemsForWomen.length;
 	let countProductsChildren = itemsForChildren.length;
@@ -107,19 +106,12 @@
 	let setItemsChild = setItems[2];
 
 
-
-	// let setItemsMen = document.body.querySelectorAll('.set_items')[0];
-	// let setItemsWomen = document.body.querySelectorAll('.set_items')[1];
-	// let setItemsChild = document.body.querySelectorAll('.set_items')[2];
-
-
 	for (let i=0; i<3; i++){
 		fillItem(itemsForMen, 1, setItemsMen.children[i], i);
 		fillItem(itemsForWomen, 1, setItemsWomen.children[i], i);
 		fillItem(itemsForChildren, 1, setItemsChild.children[i], i);
 	};
 
-	
 
 	toNextM.addEventListener('click', () => 
 		toNextSetOfItems(currentPageM, countPagesM, setItemsMen, countProductsMen, itemsForMen)
@@ -284,15 +276,7 @@
 	});
 
 
-
 	let itemSelected = document.body.querySelectorAll('.item');
-
-	/*
-	let setRows = document.body.querySelector('.content');
-    let rowsArr = Array.from(setRows.children);
-    let setItems = document.body.querySelectorAll('.set_items');
-	*/
-
 	let sortingMenu = document.body.querySelector('.sorting');
 	let containerCheck = document.body.querySelector('.container_check');
 	let backToCatalog = document.body.querySelector('.back_to_catalog');
@@ -302,20 +286,21 @@
 	let priceItem = aboutItem.querySelector('.price_item');
 	let colors = aboutItem.querySelector('.color');
 	let sizes = aboutItem.querySelector('.size');
-	
-	
-	//let descriptionItem = document.createElement('div');
-	//	descriptionItem.className = 'item_descript';
-	//	document.body.appendChild(descriptionItem);
 
+	/* --- handler for each item: description of product --- */
 	
-
-	setItems.forEach(rowItems => {
+	setItems.forEach( (rowItems, i) => {
 		rowItems.addEventListener('click', e => {
 
-		let index = (+currentPageM.innerHTML-1)*3 + elmSearch(e.target);
+		let index = (+currentPageM.innerHTML-1)*3 + elmSearch(e.target, i);
+		let neededArray = [];
 
-
+		switch (i){
+			case 0: neededArray = itemsForMen; break;
+			case 1: neededArray = itemsForWomen; break;
+			case 2: neededArray = itemsForChildren; break;
+		}
+		
 		setRows.style.display = 'none';
 		sortingMenu.style.display = 'none';
 		containerCheck.style.display = 'none';
@@ -324,31 +309,16 @@
 		descriptionItem.style.display = 'block';
 		nameProdLine.style.display = 'block';
 
-		// setRows.innerHTML=`<img src=${itemsForMen[index].img}></a>`;
-
-		
-
-		//let aboutItem = document.createElement('div');
-		//aboutItem.className = 'about_item';
-
-		
-
-/* for name product before line   */
+/*  for name product before line  -------------------- */
 		let name = nameProdLine.querySelector('span');
-		name.innerHTML = itemsForMen[index].name;
+		name.innerHTML = neededArray[index].name;
 
-
-
-
-
-
-/* for colors  */
-		
+/*  for colors -------------------- */	
 		let colorsSet = document.createElement('div');
 		colorsSet.className = 'colors';
 
-				if (Array.isArray(itemsForMen[index].colors)) {
-					let arrayOfColors = itemsForMen[index].colors;
+				if (Array.isArray(neededArray[index].colors)) {
+					let arrayOfColors = neededArray[index].colors;
 						arrayOfColors.forEach(color => {
 							let div = document.createElement('div');
 							div.style.background = color;
@@ -357,53 +327,44 @@
 					};			
 		colors.insertBefore(colorsSet,colors.children[0]);
 
-/* for size  */
+/* for size --------------------  */
 				
-				let arrayOfSizes = itemsForMen[index].size;
-				let spanSize = document.createElement('span');
+		let arrayOfSizes = neededArray[index].size;
+		let spanSize = document.createElement('span')
+		if (Array.isArray(arrayOfSizes)) {
+			let sizesString = arrayOfSizes.join(', ');
+			spanSize.textContent = sizesString;
+		 } else if(typeof (arrayOfSizes) === 'string'){
+		 	spanSize.textContent = neededArray[index].size;
+		}
+		sizes.insertBefore(spanSize,sizes.children[0]);
 
-				if (Array.isArray(arrayOfSizes)) {
-					let sizesString = arrayOfSizes.join(', ');
-					spanSize.textContent = sizesString;
-				 } else if(typeof (arrayOfSizes) === 'string'){
-				 	spanSize.textContent = itemsForMen[index].size;
-				};
-
-				sizes.insertBefore(spanSize,sizes.children[0]);
-
-/* for prices  */
+/* for prices  --------------------*/
 		
 		let divPrice = document.createElement('div');
 		divPrice.className = 'price';
-		divPrice.innerHTML=itemsForMen[index].price+',00';
+		divPrice.innerHTML=neededArray[index].price+',00';
 
 		priceItem.insertBefore(divPrice,priceItem.children[0]);
 
-/*--------------------------------------*/
+/* for image -------------------- */
 
 		let imgBigForItem = document.createElement('img');
-		let imgSource = itemsForMen[index].imgBig || itemsForMen[index].img || "images/default.png";
+		let imgSource = neededArray[index].imgBig || neededArray[index].img || "images/default.png";
 		imgBigForItem.setAttribute('src',imgSource);
 
 		descriptionItem.appendChild(imgBigForItem);
-		// descriptionItem.appendChild(aboutItem);
+
+		if (!neededArray[index].imgBig) imgBigForItem.style.left = '250px';
+
 		
-
-
 		});
 	});
 
 
-/*------------------  back to catalog ---------------------*/ 
-	
-	console.log(backToCatalog);
+/*------------------ handler : back to catalog ---------------------*/ 
 
 	backToCatalog.addEventListener('click', e => {
-		 //if (e.target === backToCatalog.firstElementChild) {
-
-		let descriptionItem = document.body.querySelector('.item_descript');
-
-
 
 		descriptionItem.style.display = 'none';
 		backToCatalog.style.display = 'none';
@@ -413,23 +374,22 @@
 		colors.children[0].remove();
 		sizes.children[0].remove();
 		descriptionItem.children[1].remove();
-		//descriptionItem.innerHTML= null;
+
 		setRows.style.display = 'block';
 		sortingMenu.style.display = 'block';
 		containerCheck.style.display = 'flex';
-
-		//}
-
 		});
 
 
 
-	function elmSearch (ele) {
+	function elmSearch (ele, forWhom) {
 			while (ele.tagName !== 'DIV' || ele.className !== 'item') {
 				ele = ele.parentElement;
 			};
-			return  Array.from(setItems[0].children).indexOf(ele)
+			return  Array.from(setItems[forWhom].children).indexOf(ele);
 		};
+
+
 
 
 
