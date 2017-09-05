@@ -1,4 +1,33 @@
 @charset "UTF-8";
+/* Large Devices, Wide Screens */
+@media only screen and (max-width: 1200px) {
+  .item .price, .item .name_item, .item .size {
+    left: 5px;
+  }
+  .item .price {
+    bottom: 5px;
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width: 992px) {
+  .item img {
+    transform: scale(0.7, 0.7);
+  }
+  .item .image {
+    width: 100%;
+  }
+}
+
+/* Small Devices, Tablets */
+/* Extra Small Devices, Phones */
+@media only screen and (max-width: 480px) {
+  body {
+    background: red;
+  }
+}
+
+/* Custom, iPhone Retina */
 body {
   font: 100% Quicksand-Bold, sans-serif;
   margin: 0;
@@ -471,7 +500,7 @@ header button:hover {
   font-size: 22px;
 }
 
-.about_item .colors, .about_item .price, .about_item .size:first-child {
+.about_item .colors, .about_item .price, .about_item .size :first-child {
   position: inherit;
   display: inline-block;
   width: 60%;

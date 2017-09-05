@@ -292,15 +292,16 @@
 	setItems.forEach( (rowItems, i) => {
 		rowItems.addEventListener('click', e => {
 
-		let index = (+currentPageM.innerHTML-1)*3 + elmSearch(e.target, i);
-		let neededArray = [];
+		let neededArray, curPage; 
 
 		switch (i){
-			case 0: neededArray = itemsForMen; break;
-			case 1: neededArray = itemsForWomen; break;
-			case 2: neededArray = itemsForChildren; break;
-		}
-		
+			case 0: neededArray = itemsForMen; curPage = +currentPageM.innerHTML; break;
+			case 1: neededArray = itemsForWomen; curPage = +currentPageW.innerHTML; break;
+			case 2: neededArray = itemsForChildren; curPage = +currentPageC.innerHTML; break;
+		};
+
+		let index = (curPage-1)*3 + elmSearch(e.target, i);
+
 		setRows.style.display = 'none';
 		sortingMenu.style.display = 'none';
 		containerCheck.style.display = 'none';
@@ -330,7 +331,7 @@
 /* for size --------------------  */
 				
 		let arrayOfSizes = neededArray[index].size;
-		let spanSize = document.createElement('span')
+		let spanSize = document.createElement('span');
 		if (Array.isArray(arrayOfSizes)) {
 			let sizesString = arrayOfSizes.join(', ');
 			spanSize.textContent = sizesString;
@@ -388,9 +389,6 @@
 			};
 			return  Array.from(setItems[forWhom].children).indexOf(ele);
 		};
-
-
-
 
 
 

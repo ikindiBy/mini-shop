@@ -1,0 +1,39 @@
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+ .item {
+ 	.price, .name_item, .size {
+ 		left: 5px;
+ 	}
+ 	.price {
+ 		bottom: 5px;
+ 	}
+ }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+.item {
+	img{
+		transform: scale(.7,.7);
+	}
+	.image {
+		width: 100%;
+	}
+}
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 480px) {
+	body {
+		background: red;
+	}
+}
+
+	/* Custom, iPhone Retina */
+@media only screen and (max-width : 320px) {
+}
