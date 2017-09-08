@@ -1,4 +1,4 @@
-    @import "media";
+    
     @import "fonts";
 
     $font-stack: 100% Quicksand-Bold, sans-serif;
@@ -80,7 +80,7 @@
 	.set_items {
     	display: flex;
     	margin-bottom: 90px;
-    	justify-content: space-between;
+    	justify-content: left;
     }
 
     %item-base {
@@ -98,7 +98,6 @@
     	width: calc( 100%/3 );
     	max-width: 320px;
     	height: 380px;
-    	padding: 20px;
     	vertical-align: top;
     	border-color: $second-color;
 
@@ -523,6 +522,8 @@
     		width: calc(100% - 200px);
     	}
     }
+
+    @import "media";
     
 
 

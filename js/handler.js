@@ -352,13 +352,18 @@
 
 		let imgBigForItem = document.createElement('img');
 		let imgSource = neededArray[index].imgBig || neededArray[index].img || "images/default.png";
+		imgSource = (document.body.clientWidth < 768)  ? neededArray[index].img || "images/default.png" : imgSource;
 		imgBigForItem.setAttribute('src',imgSource);
 
 		descriptionItem.appendChild(imgBigForItem);
 
-		if (!neededArray[index].imgBig) imgBigForItem.style.left = '250px';
-
-		
+		if (!neededArray[index].imgBig) {
+			imgBigForItem.style.left = '250px';
+			if (document.body.clientWidth < 982) {
+				imgBigForItem.style.transform = 'none';
+				imgBigForItem.style.top = '75px';
+			}
+		};
 		});
 	});
 
@@ -378,7 +383,7 @@
 
 		setRows.style.display = 'block';
 		sortingMenu.style.display = 'block';
-		containerCheck.style.display = 'flex';
+		containerCheck.style.display = (document.body.clientWidth < 767) ? 'block' : 'flex';
 		});
 
 
